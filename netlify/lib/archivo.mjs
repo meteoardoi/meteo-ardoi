@@ -1,7 +1,7 @@
 // Utilidades compartidas del archivo histórico (Netlify Blobs)
 import { getStore } from "@netlify/blobs";
 
-const store = () => getStore("meteo");
+const store = () => getStore({ name: "meteo", consistency: "strong" });
 
 export async function loadDays() {
   return (await store().get("days", { type: "json" })) || {};
