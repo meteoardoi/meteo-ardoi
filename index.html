@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meteo Ardoi · El tiempo en Zizur Mayor</title>
-<meta name="description" content="Estación meteorológica local en Zizur Mayor (Navarra). Temperatura, humedad, viento, lluvia, presión, previsión y récords.">
+<title>Meteo Zizur · El tiempo en Ardoi, Zizur Mayor</title>
+<meta name="description" content="Estación meteorológica local en Ardoi, Zizur Mayor (Navarra). Temperatura, humedad, viento, lluvia, presión, previsión y récords.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<!-- GOOGLE ADSENSE: cuando te aprueben, pega aquí el script que te den, p.ej.:
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+<!-- GOOGLE ADSENSE: pega aquí el script cuando te aprueben -->
 <style>
 :root{--bg:#0f1724;--card:#17223a;--card2:#1d2b48;--txt:#e8eef9;--muted:#93a3c0;--acc:#38bdf8;--hot:#f97316;--cold:#60a5fa;--ok:#34d399;--line:#2a3a5c}
 @media (prefers-color-scheme:light){:root{--bg:#eef3fa;--card:#fff;--card2:#f4f7fc;--txt:#13203a;--muted:#5b6b88;--line:#d8e1ef}}
@@ -40,6 +39,7 @@ h3{margin:.2rem 0 .6rem;font-size:1rem;color:var(--muted);font-weight:600}
 .tabs{display:flex;gap:.4rem;margin-bottom:.6rem;flex-wrap:wrap}
 .tabs button{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:999px;padding:.3rem .8rem;cursor:pointer;font-size:.85rem}
 .tabs button.on{background:var(--acc);color:#04121f;border-color:var(--acc)}
+.tabs button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .compass{width:170px;height:170px;margin:.4rem auto;position:relative;border-radius:50%;border:2px solid var(--line);background:var(--card2)}
 .compass b{position:absolute;font-size:.75rem;color:var(--muted)}
 .needle{position:absolute;left:50%;top:50%;width:4px;height:70px;margin-left:-2px;margin-top:-70px;background:linear-gradient(var(--hot),transparent);transform-origin:50% 100%;border-radius:4px;transition:transform 1s}
@@ -58,26 +58,25 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 </head>
 <body>
 <nav><div class="nav-in">
-  <a class="brand" href="#ahora">METEO <span>ARDOI</span></a>
-  <button id="burger" aria-label="Menú">☰</button>
+  <a class="brand" href="#ahora">METEO <span>ZIZUR</span></a>
+  <button id="burger" type="button" aria-label="Menú">☰</button>
   <div class="links" id="links">
     <a href="#ahora">Ahora</a><a href="#temperatura">Histórico</a><a href="#prevision">Previsión</a>
-    <a href="#records">Récords</a><a href="#mes">Este mes</a><a href="#sobre">Sobre Meteo Ardoi</a>
+    <a href="#records">Récords</a><a href="#mes">Este mes</a><a href="#sobre">Sobre Meteo Zizur</a>
   </div>
 </div></nav>
 
 <main>
 <header class="hero">
-  <h1>METEO ARDOI</h1>
-  <p>El tiempo en Zizur Mayor</p>
+  <h1>METEO ZIZUR</h1>
+  <p>El tiempo en Ardoi, Zizur Mayor</p>
   <p class="sub">Datos meteorológicos locales · Actualización automática</p>
   <div class="upd"><span class="dot"></span>Última actualización: <b id="upd">—</b></div>
-  <div id="err"></div>
+  <div id="err" role="alert"></div>
 </header>
 
-<!-- AHORA -->
 <section id="ahora">
-  <h2>📍 Ahora en Zizur</h2>
+  <h2>📍 Ahora en Ardoi</h2>
   <div class="grid">
     <div class="card"><div class="lbl">🌡️ Temperatura</div><div class="big" id="n-temp">—</div><div class="sub">Sensación: <span id="n-feel">—</span></div></div>
     <div class="card"><div class="lbl">💧 Humedad</div><div class="big" id="n-hum">—</div><div class="sub">Punto de rocío: <span id="n-dew">—</span></div></div>
@@ -89,13 +88,10 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
   </div>
 </section>
 
-<!-- PUBLICIDAD 1 -->
 <section><div class="ad" id="ad1">
-  <!-- AdSense: sustituye este bloque por tu <ins class="adsbygoogle" ...> -->
-  <strong>Patrocina Meteo Ardoi</strong>Tu negocio aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
+  <strong>Patrocina Meteo Zizur</strong>Tu negocio aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
 </div></section>
 
-<!-- TEMPERATURA -->
 <section id="temperatura">
   <h2>🌡️ Temperatura</h2>
   <div class="two">
@@ -109,11 +105,10 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
     <div class="card"><h3>📈 Evolución últimas 24 horas</h3><div class="chartbox"><canvas id="ch-t24"></canvas></div></div>
   </div>
   <div class="card" style="margin-top:1rem"><h3>📅 Histórico de temperatura</h3>
-    <div class="tabs" data-for="t"><button data-d="7" class="on">7 días</button><button data-d="14">14 días</button><button data-d="30">30 días</button></div>
+    <div class="tabs" data-for="t"><button type="button" data-d="7" class="on">7 días</button><button type="button" data-d="30">30 días</button><button type="button" data-d="90">3 meses</button><button type="button" data-d="365">1 año</button><button type="button" data-d="0">Todo</button></div>
     <div class="chartbox"><canvas id="ch-thist"></canvas></div></div>
 </section>
 
-<!-- HUMEDAD -->
 <section id="humedad">
   <h2>💧 Humedad</h2>
   <div class="two">
@@ -126,11 +121,10 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
     <div class="card"><h3>📈 Evolución últimas 24 horas</h3><div class="chartbox"><canvas id="ch-h24"></canvas></div></div>
   </div>
   <div class="card" style="margin-top:1rem"><h3>📅 Histórico de humedad</h3>
-    <div class="tabs" data-for="h"><button data-d="7" class="on">7 días</button><button data-d="14">14 días</button><button data-d="30">30 días</button></div>
+    <div class="tabs" data-for="h"><button type="button" data-d="7" class="on">7 días</button><button type="button" data-d="30">30 días</button><button type="button" data-d="90">3 meses</button><button type="button" data-d="365">1 año</button><button type="button" data-d="0">Todo</button></div>
     <div class="chartbox"><canvas id="ch-hhist"></canvas></div></div>
 </section>
 
-<!-- VIENTO -->
 <section id="viento">
   <h2>💨 Viento</h2>
   <div class="two">
@@ -151,7 +145,6 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
   </div>
 </section>
 
-<!-- LLUVIA -->
 <section id="lluvia">
   <h2>🌧️ Precipitación</h2>
   <div class="grid">
@@ -159,12 +152,11 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
     <div class="card"><div class="lbl">Hoy</div><div class="big" id="r-today">—</div></div>
     <div class="card"><div class="lbl">Últimos 7 días</div><div class="big" id="r-7d">—</div></div>
     <div class="card"><div class="lbl">Este mes</div><div class="big" id="r-month">—</div></div>
-    <div class="card"><div class="lbl">Este año*</div><div class="big" id="r-year">—</div><div class="sub" id="r-year-n"></div></div>
+    <div class="card"><div class="lbl">Este año</div><div class="big" id="r-year">—</div><div class="sub" id="r-year-n"></div></div>
   </div>
   <div class="card" style="margin-top:1rem"><h3>📊 Precipitación últimos 30 días</h3><div class="chartbox"><canvas id="ch-r30"></canvas></div></div>
 </section>
 
-<!-- PRESIÓN -->
 <section id="presion">
   <h2>🔽 Presión atmosférica</h2>
   <div class="two">
@@ -173,14 +165,12 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
   </div>
 </section>
 
-<!-- PREVISIÓN -->
 <section id="prevision">
   <h2>📅 Próximos días</h2>
   <div class="fc" id="fc"><div class="sk">Cargando previsión…</div></div>
-  <p class="note">⚠️ <b>Datos actuales → estación Meteo Ardoi.</b> &nbsp; <b>Previsión → proveedor meteorológico externo (The Weather Company)</b>, no procede de nuestra estación.</p>
+  <p class="note">⚠️ <b>Datos actuales → estación Meteo Zizur.</b> &nbsp; <b>Previsión → proveedor meteorológico externo (The Weather Company)</b>, no procede de nuestra estación.</p>
 </section>
 
-<!-- RESUMEN -->
 <section id="resumen">
   <h2>📝 Hoy en Ardoi</h2>
   <div class="card summary">
@@ -195,20 +185,18 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
   <div class="grid" id="cmp"></div>
 </section>
 
-<!-- RÉCORDS -->
 <section id="records">
   <h2>🏆 Récords meteorológicos</h2>
-  <div class="tabs" data-for="rec"><button data-r="mes" class="on">Este mes</button><button data-r="anio">Este año</button><button data-r="hist">Histórico</button></div>
+  <div class="tabs" data-for="rec"><button type="button" data-r="mes" class="on">Este mes</button><button type="button" data-r="anio">Este año</button><button type="button" data-r="hist">Histórico</button></div>
   <div class="grid">
     <div class="card"><div class="lbl">🔥 Temperatura máxima</div><div class="big" id="rc-tmax">—</div><div class="sub" id="rc-tmax-d"></div></div>
     <div class="card"><div class="lbl">❄️ Temperatura mínima</div><div class="big" id="rc-tmin">—</div><div class="sub" id="rc-tmin-d"></div></div>
     <div class="card"><div class="lbl">💨 Racha máxima</div><div class="big" id="rc-gust">—</div><div class="sub" id="rc-gust-d"></div></div>
     <div class="card"><div class="lbl">🌧️ Día más lluvioso</div><div class="big" id="rc-rain">—</div><div class="sub" id="rc-rain-d"></div></div>
   </div>
-  <p class="note" id="rec-note"></p>
+  <p class="note" id="rec-note" aria-live="polite"></p>
 </section>
 
-<!-- ASÍ VA EL MES -->
 <section id="mes">
   <h2 id="mes-title">📊 Así va el mes</h2>
   <div class="grid">
@@ -221,139 +209,92 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
   </div>
 </section>
 
-<!-- PUBLICIDAD 2 -->
 <section><div class="ad" id="ad2">
-  <!-- AdSense: segundo bloque responsive -->
   <strong>Espacio publicitario</strong>¿Tienes un negocio en Zizur? Anúnciate aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
 </div></section>
 
-<!-- SOBRE -->
 <section id="sobre">
-  <h2>ℹ️ Sobre Meteo Ardoi</h2>
+  <h2>ℹ️ Sobre Meteo Zizur</h2>
   <div class="card">
-    <p style="margin-top:0">Meteo Ardoi es una estación meteorológica particular situada Zizur Mayor (Navarra).</p>
+    <p style="margin-top:0">Meteo Zizur es una estación meteorológica particular situada en la zona de Ardoi, Zizur Mayor (Navarra).</p>
     <p>La estación proporciona información meteorológica local de temperatura, humedad, viento, precipitación y presión atmosférica, actualizada de forma automática.</p>
-    <p style="margin-bottom:0">Los récords y estadísticas se calculan a partir de los datos registrados por la propia estación.</p>
+    <p style="margin-bottom:0">Los récords y estadísticas se calculan con todo el histórico registrado por la propia estación<span id="since"></span>.</p>
   </div>
 </section>
 </main>
 
 <footer>
-  <b>METEO ARDOI</b><br>Estación meteorológica local<br>Zizur Mayor · Navarra
-  <div class="fl"><a href="#ahora">Inicio</a><a href="#temperatura">Histórico</a><a href="#sobre">Sobre Meteo Ardoi</a>
+  <b>METEO ZIZUR</b><br>Estación meteorológica local<br>Ardoi · Zizur Mayor · Navarra
+  <div class="fl"><a href="#ahora">Inicio</a><a href="#temperatura">Histórico</a><a href="#sobre">Sobre Meteo Zizur</a>
     <a href="privacidad.html">Privacidad</a><a href="cookies.html">Cookies</a><a href="aviso-legal.html">Aviso legal</a></div>
   Los datos proporcionados tienen carácter informativo y no sustituyen información meteorológica oficial (AEMET).<br>
-  © <span id="yr"></span> Meteo Ardoi
+  © <span id="yr"></span> Meteo Zizur
 </footer>
 
 <script>
-/* ================= CONFIGURACIÓN =================
-   En Netlify: USE_PROXY = true y define WU_API_KEY y WU_STATION_ID
-   en Site configuration → Environment variables.
-   Solo para probar en local: USE_PROXY = false y rellena DIRECT.        */
-const CONFIG = {
-  USE_PROXY: true,
-  DIRECT: { apiKey: "TU_API_KEY", stationId: "TU_STATION_ID", geocode: "42.789,-1.689" },
-  REFRESH_MIN: 5,
-  HISTORY_DAYS: 31   // días de histórico diario que se cargan (con caché local)
-};
+const CONFIG = { REFRESH_MIN: 5 };
 
-/* ================= UTILIDADES ================= */
 const $ = id => document.getElementById(id);
 const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
-const f1 = v => (v == null || isNaN(v)) ? "—" : Number(v).toLocaleString("es-ES",{minimumFractionDigits:1,maximumFractionDigits:1});
-const f0 = v => (v == null || isNaN(v)) ? "—" : Math.round(v).toLocaleString("es-ES");
-const ymd = d => d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");
+const ok = v => v != null && !isNaN(v) && isFinite(v);
+const f1 = v => ok(v) ? Number(v).toLocaleString("es-ES",{minimumFractionDigits:1,maximumFractionDigits:1}) : "—";
+const f0 = v => ok(v) ? Math.round(v).toLocaleString("es-ES") : "—";
 const hhmm = s => s ? s.slice(11,16) : "—";
-const dLabel = d => d.toLocaleDateString("es-ES",{day:"numeric",month:"short"});
+const pDate = iso => new Date(iso + "T12:00:00");
+const dLabel = iso => pDate(iso).toLocaleDateString("es-ES",{day:"numeric",month:"short"});
+const dLabelY = iso => pDate(iso).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"2-digit"});
+const dLong = iso => pDate(iso).toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
+const isoLocal = d => d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 const DIRS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];
 const dirTxt = deg => deg == null ? "—" : DIRS[Math.round(deg/22.5)%16];
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const max = (a,k) => a.reduce((m,x)=> (x[k]!=null && (m==null||x[k]>m[k])) ? x : m, null);
-const min = (a,k) => a.reduce((m,x)=> (x[k]!=null && (m==null||x[k]<m[k])) ? x : m, null);
+const maxBy = (a,k) => a.reduce((m,x)=> (ok(x[k]) && (m==null||x[k]>m[k])) ? x : m, null);
+const minBy = (a,k) => a.reduce((m,x)=> (ok(x[k]) && (m==null||x[k]<m[k])) ? x : m, null);
 $("yr").textContent = new Date().getFullYear();
-$("burger").onclick = () => $("links").classList.toggle("open");
-document.querySelectorAll(".links a").forEach(a => a.onclick = () => $("links").classList.remove("open"));
+$("burger").addEventListener("click", () => $("links").classList.toggle("open"));
+document.querySelectorAll(".links a").forEach(a => a.addEventListener("click", () => $("links").classList.remove("open")));
 
-async function api(type, extra = {}) {
-  let url;
-  if (CONFIG.USE_PROXY) {
-    url = `/.netlify/functions/wu?type=${type}` + (extra.date ? `&date=${extra.date}` : "");
-  } else {
-    const D = CONFIG.DIRECT, P = {
-      current:"v2/pws/observations/current", day:"v2/pws/observations/all/1day",
-      daily7:"v2/pws/dailysummary/7day", history:"v2/pws/history/daily", forecast:"v3/wx/forecast/daily/5day"}[type];
-    const p = new URLSearchParams({format:"json",units:"m",apiKey:D.apiKey});
-    if (type==="forecast"){p.set("geocode",D.geocode);p.set("language","es-ES");}
-    else {p.set("stationId",D.stationId);p.set("numericPrecision","decimal");}
-    if (extra.date) p.set("date", extra.date);
-    url = `https://api.weather.com/${P}?${p}`;
-  }
-  const r = await fetch(url);
+async function api(type) {
+  const r = await fetch("/.netlify/functions/wu?type=" + type);
   if (r.status === 204) return {};
-  if (!r.ok) throw new Error(`${type}: HTTP ${r.status}`);
+  if (!r.ok) throw new Error(type + ": HTTP " + r.status);
   return r.json();
 }
 
-/* Normaliza un resumen diario (history / dailysummary) */
-const normDay = o => o && o.metric ? ({
-  date: o.obsTimeLocal.slice(0,10), tmax:o.metric.tempHigh, tmin:o.metric.tempLow, tavg:o.metric.tempAvg,
-  hmax:o.humidityHigh, hmin:o.humidityLow, havg:o.humidityAvg,
-  gust:o.metric.windgustHigh, rain:o.metric.precipTotal
-}) : null;
-
-/* Histórico diario con caché en localStorage (los días pasados no cambian) */
-async function loadHistory(days) {
-  const cache = JSON.parse(localStorage.getItem("mz_hist") || "{}");
-  const out = [], today = new Date();
-  for (let i = days; i >= 1; i--) {
-    const d = new Date(today); d.setDate(d.getDate()-i);
-    const k = ymd(d);
-    if (!cache[k]) {
-      try {
-        const j = await api("history", {date:k});
-        cache[k] = normDay(j.observations && j.observations[0]) || {date:`${k.slice(0,4)}-${k.slice(4,6)}-${k.slice(6)}`, empty:true};
-        await sleep(250); // respeta el límite de llamadas de la API
-      } catch(e) { console.warn(e); continue; }
-    }
-    if (!cache[k].empty) out.push(cache[k]);
-  }
-  localStorage.setItem("mz_hist", JSON.stringify(cache));
-  updateArchive(Object.values(cache).filter(x=>!x.empty));
-  return out;
+/* Histórico completo: viene del archivo guardado en Netlify (sin llamar a la API por cada visitante) */
+let ARCH = [];
+async function loadArchive() {
+  try {
+    const r = await fetch("/.netlify/functions/archivo");
+    const j = await r.json();
+    ARCH = Array.isArray(j) ? j : [];
+  } catch (e) { ARCH = []; }
+  const todayIso = isoLocal(new Date());
+  ARCH = ARCH.filter(d => d.date < todayIso);
+  if (ARCH.length) set("since", " desde el " + dLong(ARCH[0].date));
 }
 
-/* Archivo de récords anuales / históricos (se va construyendo con el tiempo) */
-function updateArchive(days) {
-  const arc = JSON.parse(localStorage.getItem("mz_arch") || "{}");
-  days.forEach(d => arc[d.date] = d);
-  localStorage.setItem("mz_arch", JSON.stringify(arc));
-}
-
-/* ================= GRÁFICOS ================= */
 const charts = {};
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-function chart(id, type, labels, datasets, opts = {}) {
+function chart(id, type, labels, datasets, opts) {
   if (charts[id]) charts[id].destroy();
   Chart.defaults.color = css("--muted"); Chart.defaults.borderColor = css("--line");
   charts[id] = new Chart($(id), { type, data:{labels, datasets},
-    options:{ responsive:true, maintainAspectRatio:false, interaction:{mode:"index",intersect:false},
+    options:Object.assign({ responsive:true, maintainAspectRatio:false, interaction:{mode:"index",intersect:false},
       plugins:{legend:{display:datasets.length>1}}, elements:{point:{radius:0},line:{tension:.35}},
-      scales:{x:{ticks:{maxTicksLimit:8}}}, ...opts } });
+      scales:{x:{ticks:{maxTicksLimit:8}}}}, opts || {}) });
 }
-const ds = (label, data, color, extra={}) => ({label, data, borderColor:color, backgroundColor:color+"33", borderWidth:2, fill:false, ...extra});
+const ds = (label, data, color, extra) => Object.assign({label, data, borderColor:color, backgroundColor:color+"33", borderWidth:2, fill:false}, extra || {});
 
-/* ================= RENDER ================= */
-let HIST = [], TODAY = null, CUR = null, recMode = "mes";
+let TODAY = null, recMode = "mes";
 
-function renderNow(c, day) {
+function renderNow(c) {
   const m = c.metric;
   set("n-temp", f1(m.temp)+" °C"); set("t-now", f1(m.temp)+" °C");
-  const feel = m.temp < 10 ? m.windChill : m.heatIndex; set("n-feel", f1(feel)+" °C");
+  set("n-feel", f1(m.temp < 10 ? m.windChill : m.heatIndex)+" °C");
   set("n-hum", f0(c.humidity)+" %"); set("h-now", f0(c.humidity)+" %"); set("n-dew", f1(m.dewpt)+" °C");
-  set("n-wind", f0(m.windSpeed)+" km/h"); set("n-wdir", `${dirTxt(c.winddir)} · ${f0(c.winddir)}° · racha ${f0(m.windGust)} km/h`);
-  set("w-now", f0(m.windSpeed)+" km/h"); set("w-dir", `${dirTxt(c.winddir)} · ${f0(c.winddir)}°`);
-  $("needle").style.transform = `rotate(${(c.winddir||0)+180}deg)`; // apunta hacia donde va el viento
+  set("n-wind", f0(m.windSpeed)+" km/h"); set("n-wdir", dirTxt(c.winddir)+" · "+f0(c.winddir)+"° · racha "+f0(m.windGust)+" km/h");
+  set("w-now", f0(m.windSpeed)+" km/h"); set("w-dir", dirTxt(c.winddir)+" · "+f0(c.winddir)+"°");
+  $("needle").style.transform = "rotate(" + ((c.winddir||0)+180) + "deg)";
   set("n-rain", f1(m.precipTotal)+" mm"); set("n-rrate", f1(m.precipRate)+" mm/h");
   set("n-pres", f0(m.pressure)+" hPa"); set("p-now", f1(m.pressure)+" hPa");
   if (c.uv == null && c.solarRadiation == null) $("c-uv").style.display="none";
@@ -363,15 +304,15 @@ function renderNow(c, day) {
 
 function renderDay(obs) {
   if (!obs.length) return;
-  const lab = obs.map(o => hhmm(o.obsTimeLocal));
-  const M = obs.map(o => o.metric);
+  const lab = obs.map(o => hhmm(o.obsTimeLocal)), M = obs.map(o => o.metric);
   const tmax = Math.max(...M.map(m=>m.tempHigh)), tmin = Math.min(...M.map(m=>m.tempLow));
   const tavg = M.reduce((s,m)=>s+m.tempAvg,0)/M.length;
   const hmax = Math.max(...obs.map(o=>o.humidityHigh)), hmin = Math.min(...obs.map(o=>o.humidityLow));
   const gi = M.reduce((b,m,i)=> m.windgustHigh > M[b].windgustHigh ? i : b, 0);
   const wavg = M.reduce((s,m)=>s+m.windspeedAvg,0)/M.length;
   const rain = Math.max(...M.map(m=>m.precipTotal||0));
-  TODAY = {date: obs.at(-1).obsTimeLocal.slice(0,10), tmax, tmin, tavg, hmax, hmin, havg: obs.reduce((s,o)=>s+o.humidityAvg,0)/obs.length, gust:M[gi].windgustHigh, rain};
+  TODAY = {date: obs[obs.length-1].obsTimeLocal.slice(0,10), tmax, tmin, tavg, hmax, hmin,
+    havg: obs.reduce((s,o)=>s+o.humidityAvg,0)/obs.length, gust:M[gi].windgustHigh, rain};
 
   set("t-max", f1(tmax)+" °C"); set("t-min", f1(tmin)+" °C"); set("t-avg", f1(tavg)+" °C");
   set("h-max", f0(hmax)+" %"); set("h-min", f0(hmin)+" %");
@@ -382,120 +323,120 @@ function renderDay(obs) {
   chart("ch-w24","line",lab,[ds("Viento km/h",M.map(m=>m.windspeedAvg),"#34d399"),ds("Racha km/h",M.map(m=>m.windgustHigh),"#f43f5e",{borderDash:[4,4]})]);
   chart("ch-p24","line",lab,[ds("Presión hPa",M.map(m=>m.pressureMax),"#a78bfa")]);
 
-  // Tendencia de presión (3 h ≈ 36 lecturas de 5 min)
-  const p0 = M[Math.max(0,M.length-37)].pressureMax, p1 = M.at(-1).pressureMax, dp = p1-p0;
+  const p0 = M[Math.max(0,M.length-37)].pressureMax, p1 = M[M.length-1].pressureMax, dp = p1-p0;
   const tr = dp > 1 ? "↗ Subiendo" : dp < -1 ? "↘ Bajando" : "→ Estable";
-  set("p-trend", `${tr} (${dp>=0?"+":""}${f1(dp)} hPa)`); set("n-ptrend", tr);
-
-  // Lluvia última hora (≈12 lecturas)
+  set("p-trend", tr+" ("+(dp>=0?"+":"")+f1(dp)+" hPa)"); set("n-ptrend", tr);
   const ph = M[Math.max(0,M.length-13)].precipTotal||0;
   set("r-1h", f1(Math.max(0,rain-ph))+" mm"); set("r-today", f1(rain)+" mm");
 
-  // Resumen
   set("s-max", f1(tmax)+" °C"); set("s-min", f1(tmin)+" °C"); set("s-gust", f0(TODAY.gust)+" km/h");
   set("s-rain", f1(rain)+" mm"); set("s-hum", f0(hmax)+" %");
   const temp = tmax >= 30 ? "Día caluroso" : tmax >= 22 ? "Día templado" : tmax >= 14 ? "Día fresco" : "Día frío";
   const hum = TODAY.havg >= 75 ? " y húmedo" : TODAY.havg <= 40 ? " y seco" : "";
   const wind = TODAY.gust >= 50 ? ", con rachas fuertes de hasta "+f0(TODAY.gust)+" km/h" : TODAY.gust >= 30 ? ", con algo de viento" : "";
-  const rtxt = rain >= 0.2 ? ` y precipitaciones acumuladas de ${f1(rain)} mm` : " y sin precipitaciones";
-  set("sum-text", `${temp}${hum} en Ardoi, con temperaturas entre ${f1(tmin)} °C y ${f1(tmax)} °C${wind}${rtxt}.`);
+  const rtxt = rain >= 0.2 ? " y precipitaciones acumuladas de "+f1(rain)+" mm" : " y sin precipitaciones";
+  set("sum-text", temp+hum+" en Ardoi, con temperaturas entre "+f1(tmin)+" °C y "+f1(tmax)+" °C"+wind+rtxt+".");
 }
 
-function renderHistCharts(days, which) {
-  const sl = HIST.slice(-days);
-  const lab = sl.map(d => dLabel(new Date(d.date)));
-  if (which !== "h") chart("ch-thist","line",lab,[ds("Máxima °C",sl.map(d=>d.tmax),"#f97316"),ds("Mínima °C",sl.map(d=>d.tmin),"#60a5fa")],{elements:{point:{radius:3},line:{tension:.3}}});
-  if (which !== "t") chart("ch-hhist","line",lab,[ds("Máxima %",sl.map(d=>d.hmax),"#38bdf8"),ds("Mínima %",sl.map(d=>d.hmin),"#94a3b8")],{elements:{point:{radius:3},line:{tension:.3}},scales:{y:{min:0,max:100}}});
+const histDays = { t: 7, h: 7 };
+function renderHistCharts() {
+  const opts = (y) => ({elements:{point:{radius:0},line:{tension:.3}}, scales:Object.assign({x:{ticks:{maxTicksLimit:10}}}, y||{})});
+  const slice = n => n > 0 ? ARCH.slice(-n) : ARCH;
+  const lbl = (a,n) => a.map(d => (n === 0 || n > 90) ? dLabelY(d.date) : dLabel(d.date));
+  const t = slice(histDays.t), h = slice(histDays.h);
+  chart("ch-thist","line",lbl(t,histDays.t),[ds("Máxima °C",t.map(d=>d.tmax),"#f97316"),ds("Mínima °C",t.map(d=>d.tmin),"#60a5fa")],opts());
+  chart("ch-hhist","line",lbl(h,histDays.h),[ds("Máxima %",h.map(d=>d.hmax),"#38bdf8"),ds("Mínima %",h.map(d=>d.hmin),"#94a3b8")],opts({y:{min:0,max:100}}));
 }
+
+const allDays = () => TODAY ? ARCH.concat([TODAY]) : ARCH.slice();
+const sum = a => a.reduce((s,d)=>s+(d.rain||0),0);
 
 function renderRain() {
-  const last30 = HIST.slice(-30);
-  const all = TODAY ? [...HIST, TODAY] : HIST;
-  const now = new Date(), mk = now.toISOString().slice(0,7), yk = String(now.getFullYear());
-  const sum = a => a.reduce((s,d)=>s+(d.rain||0),0);
+  const all = allDays(), now = new Date();
+  const mk = isoLocal(now).slice(0,7), yk = String(now.getFullYear());
   set("r-7d", f1(sum(all.slice(-7)))+" mm");
   set("r-month", f1(sum(all.filter(d=>d.date.startsWith(mk))))+" mm");
-  const arc = Object.values(JSON.parse(localStorage.getItem("mz_arch")||"{}")).filter(d=>d.date.startsWith(yk));
-  set("r-year", f1(sum(arc)+(TODAY?TODAY.rain:0))+" mm"); set("r-year-n", `*con ${arc.length+1} días registrados`);
-  chart("ch-r30","bar",last30.map(d=>dLabel(new Date(d.date))),[{label:"mm",data:last30.map(d=>d.rain),backgroundColor:"#38bdf8"}]);
+  const y = all.filter(d=>d.date.startsWith(yk));
+  set("r-year", f1(sum(y))+" mm");
+  set("r-year-n", y.length && y[0].date > yk+"-01-05" ? "desde el "+dLong(y[0].date) : "");
+  const last30 = ARCH.slice(-30);
+  chart("ch-r30","bar",last30.map(d=>dLabel(d.date)),[{label:"mm",data:last30.map(d=>d.rain),backgroundColor:"#38bdf8"}]);
 }
 
 function renderCompare() {
-  const y = HIST.at(-1); if (!y || !TODAY) return;
-  const item = (lbl, a, b, u, dec=1, inv=false) => {
+  const y = ARCH[ARCH.length-1]; if (!y || !TODAY) return;
+  const item = (lbl, a, b, u, dec, inv) => {
     const d = a-b, cls = d>0 ? (inv?"down":"up") : d<0 ? (inv?"up":"down") : "";
-    return `<div class="card"><div class="lbl">${lbl}</div><div class="big ${cls}" style="font-size:1.5rem">${d>=0?"+":""}${dec?f1(d):f0(d)} ${u}</div><div class="sub">Hoy ${dec?f1(a):f0(a)} · Ayer ${dec?f1(b):f0(b)}</div></div>`;
+    const F = dec ? f1 : f0;
+    return '<div class="card"><div class="lbl">'+lbl+'</div><div class="big '+cls+'" style="font-size:1.5rem">'+(d>=0?"+":"")+F(d)+' '+u+'</div><div class="sub">Hoy '+F(a)+' · Ayer '+F(b)+'</div></div>';
   };
-  $("cmp").innerHTML = item("🌡️ Máxima",TODAY.tmax,y.tmax,"°C")+item("❄️ Mínima",TODAY.tmin,y.tmin,"°C")
-    + item("💧 Humedad media",TODAY.havg,y.havg,"%",0,true)+item("🌧️ Lluvia",TODAY.rain,y.rain,"mm",1,true);
+  $("cmp").innerHTML = item("🌡️ Máxima",TODAY.tmax,y.tmax,"°C",1) + item("❄️ Mínima",TODAY.tmin,y.tmin,"°C",1)
+    + item("💧 Humedad media",TODAY.havg,y.havg,"%",0,true) + item("🌧️ Lluvia",TODAY.rain,y.rain,"mm",1,true);
 }
 
 function renderRecords() {
-  const now = new Date(), mk = now.toISOString().slice(0,7), yk = String(now.getFullYear());
-  const arc = Object.values(JSON.parse(localStorage.getItem("mz_arch")||"{}"));
-  let pool = recMode==="mes" ? arc.filter(d=>d.date.startsWith(mk)) : recMode==="anio" ? arc.filter(d=>d.date.startsWith(yk)) : arc;
-  if (TODAY) pool = [...pool.filter(d=>d.date!==TODAY.date), TODAY];
-  const dd = d => d ? new Date(d.date).toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"}) : "";
-  const a=max(pool,"tmax"), b=min(pool,"tmin"), c=max(pool,"gust"), r=max(pool,"rain");
-  set("rc-tmax", a?f1(a.tmax)+" °C":"—"); set("rc-tmax-d", dd(a));
-  set("rc-tmin", b?f1(b.tmin)+" °C":"—"); set("rc-tmin-d", dd(b));
-  set("rc-gust", c?f0(c.gust)+" km/h":"—"); set("rc-gust-d", dd(c));
-  set("rc-rain", r?f1(r.rain)+" mm":"—"); set("rc-rain-d", dd(r));
-  const first = pool.map(d=>d.date).sort()[0];
-  set("rec-note", first ? `Calculado con ${pool.length} días de datos (desde ${dd({date:first})}). Los récords anuales e históricos crecen a medida que la estación acumula datos.` : "");
+  const now = new Date(), mk = isoLocal(now).slice(0,7), yk = String(now.getFullYear());
+  const all = allDays();
+  const pool = recMode==="mes" ? all.filter(d=>d.date.startsWith(mk)) : recMode==="anio" ? all.filter(d=>d.date.startsWith(yk)) : all;
+  const a=maxBy(pool,"tmax"), b=minBy(pool,"tmin"), c=maxBy(pool,"gust"), r=maxBy(pool,"rain");
+  set("rc-tmax", a?f1(a.tmax)+" °C":"—"); set("rc-tmax-d", a?dLong(a.date):"");
+  set("rc-tmin", b?f1(b.tmin)+" °C":"—"); set("rc-tmin-d", b?dLong(b.date):"");
+  set("rc-gust", c?f0(c.gust)+" km/h":"—"); set("rc-gust-d", c?dLong(c.date):"");
+  set("rc-rain", r?f1(r.rain)+" mm":"—"); set("rc-rain-d", r?dLong(r.date):"");
+  set("rec-note", pool.length ? "Calculado con "+pool.length.toLocaleString("es-ES")+" días de datos (desde el "+dLong(pool[0].date)+")." : "Sin datos todavía.");
 }
 
 function renderMonth() {
-  const now = new Date(), mk = now.toISOString().slice(0,7);
-  const md = [...HIST.filter(d=>d.date.startsWith(mk)), ...(TODAY?[TODAY]:[])];
-  const name = now.toLocaleDateString("es-ES",{month:"long",year:"numeric"});
-  set("mes-title", `📊 Así va ${name} en Ardoi`);
+  const now = new Date(), mk = isoLocal(now).slice(0,7);
+  const md = allDays().filter(d=>d.date.startsWith(mk));
+  set("mes-title", "📊 Así va "+now.toLocaleDateString("es-ES",{month:"long",year:"numeric"})+" en Ardoi");
   if (!md.length) return;
-  set("m-avg", f1(md.reduce((s,d)=>s+(d.tavg ?? (d.tmax+d.tmin)/2),0)/md.length)+" °C");
-  set("m-max", f1(max(md,"tmax").tmax)+" °C"); set("m-min", f1(min(md,"tmin").tmin)+" °C");
-  set("m-rain", f1(md.reduce((s,d)=>s+(d.rain||0),0))+" mm");
-  set("m-rdays", md.filter(d=>d.rain>=0.2).length); set("m-gust", f0(max(md,"gust").gust)+" km/h");
+  set("m-avg", f1(md.reduce((s,d)=>s+(ok(d.tavg)?d.tavg:(d.tmax+d.tmin)/2),0)/md.length)+" °C");
+  set("m-max", f1(maxBy(md,"tmax").tmax)+" °C"); set("m-min", f1(minBy(md,"tmin").tmin)+" °C");
+  set("m-rain", f1(sum(md))+" mm");
+  set("m-rdays", md.filter(d=>d.rain>=0.2).length); set("m-gust", f0((maxBy(md,"gust")||{}).gust)+" km/h");
 }
 
 const WX = c => c==null?"🌡️": c<=4?"⛈️": c<=12?"🌧️": c<=16?"❄️": c<=22?"🌫️": c<=26?"☁️": c<=28?"🌥️": c<=30?"⛅": c<=34?"☀️": c<=40?"🌧️": c<=43?"❄️":"⛈️";
 function renderForecast(f) {
-  if (!f.dayOfWeek) { $("fc").innerHTML = '<div class="sk">Previsión no disponible.</div>'; return; }
+  if (!f || !f.dayOfWeek) { $("fc").innerHTML = '<div class="sk">Previsión no disponible.</div>'; return; }
   const dp = f.daypart[0];
-  // Condición actual estimada (proveedor externo)
   const i0 = dp.wxPhraseLong[0] != null ? 0 : 1;
   set("n-cond-ico", WX(dp.iconCode[i0])); set("n-cond", dp.wxPhraseLong[i0] || "—");
   $("fc").innerHTML = f.dayOfWeek.slice(0,5).map((d,i) => {
-    const di = dp.iconCode[i*2] ?? dp.iconCode[i*2+1], pc = dp.precipChance[i*2] ?? dp.precipChance[i*2+1];
+    const di = dp.iconCode[i*2] != null ? dp.iconCode[i*2] : dp.iconCode[i*2+1];
+    const pc = dp.precipChance[i*2] != null ? dp.precipChance[i*2] : dp.precipChance[i*2+1];
     const name = i===0 ? "Hoy" : i===1 ? "Mañana" : d;
-    return `<div class="card"><div class="lbl">${name}</div><div class="ico">${WX(di)}</div>
-      <div class="big" style="font-size:1.3rem">${f.temperatureMax[i]!=null?f0(f.temperatureMax[i])+"°":"—"} / ${f0(f.temperatureMin[i])}°</div>
-      <div class="sub">💧 ${f0(pc)} % lluvia</div></div>`;
+    return '<div class="card"><div class="lbl">'+name+'</div><div class="ico">'+WX(di)+'</div>'
+      +'<div class="big" style="font-size:1.3rem">'+(f.temperatureMax[i]!=null?f0(f.temperatureMax[i])+"°":"—")+' / '+f0(f.temperatureMin[i])+'°</div>'
+      +'<div class="sub">💧 '+f0(pc)+' % lluvia</div></div>';
   }).join("");
 }
 
-/* Pestañas */
 document.querySelectorAll(".tabs").forEach(t => t.addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
   t.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
   if (t.dataset.for === "rec") { recMode = b.dataset.r; renderRecords(); }
-  else renderHistCharts(+b.dataset.d, t.dataset.for);
+  else { histDays[t.dataset.for] = +b.dataset.d; renderHistCharts(); }
 }));
 
-/* ================= CICLO PRINCIPAL ================= */
+function renderAll() { renderRain(); renderCompare(); renderRecords(); renderMonth(); }
+
 async function refreshLive() {
   try {
-    const [c, d] = await Promise.all([api("current"), api("day")]);
-    CUR = c.observations[0]; renderNow(CUR);
-    renderDay(d.observations || []);
-    renderRain(); renderCompare(); renderRecords(); renderMonth();
+    const res = await Promise.all([api("current"), api("day")]);
+    renderNow(res[0].observations[0]);
+    renderDay(res[1].observations || []);
+    renderAll();
     $("err").style.display = "none";
   } catch(e) { $("err").textContent = "No se han podido cargar los datos de la estación ("+e.message+")."; $("err").style.display="block"; }
 }
 async function init() {
+  const arch = loadArchive();
   await refreshLive();
-  api("forecast").then(renderForecast).catch(()=>renderForecast({}));
-  HIST = await loadHistory(CONFIG.HISTORY_DAYS);
-  renderHistCharts(7); renderRain(); renderCompare(); renderRecords(); renderMonth();
+  api("forecast").then(renderForecast).catch(()=>renderForecast(null));
+  await arch;
+  renderHistCharts(); renderAll();
   setInterval(refreshLive, CONFIG.REFRESH_MIN*60000);
   setInterval(()=>api("forecast").then(renderForecast).catch(()=>{}), 30*60000);
 }

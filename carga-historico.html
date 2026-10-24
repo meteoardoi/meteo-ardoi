@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Carga del histórico · Meteo Zizur</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:640px;margin:auto;padding:1.5rem 1rem;background:#0f1724;color:#e8eef9}
+label{display:block;margin:.8rem 0 .2rem}input{width:100%;padding:.55rem;border-radius:8px;border:1px solid #2a3a5c;background:#17223a;color:inherit}
+button{margin-top:1rem;padding:.6rem 1.2rem;border:0;border-radius:8px;background:#38bdf8;color:#04121f;font-weight:700;cursor:pointer}
+button:disabled{opacity:.5}#bar{height:12px;background:#17223a;border-radius:6px;margin:1rem 0;overflow:hidden}#bar div{height:100%;width:0;background:#34d399;transition:width .4s}
+#log{background:#17223a;border-radius:8px;padding:.8rem;font:13px monospace;max-height:300px;overflow:auto;white-space:pre-wrap}
+</style></head><body>
+<h1>Carga del histórico</h1>
+<p>Descarga una sola vez todos los días pasados de la estación y los guarda en Netlify. Tarda unos 25–30 minutos para 2 años (límite de Weather Underground: 30 consultas/minuto). Deja esta pestaña abierta; si se corta, vuelve a pulsar y continuará donde lo dejó.</p>
+<label for="k">Clave de administración (ADMIN_KEY)</label><input id="k" type="password">
+<label for="s">Primer día con datos de la estación</label><input id="s" type="date">
+<button id="go" type="button">Empezar / continuar</button>
+<div id="bar"><div></div></div><div id="st" aria-live="polite">—</div>
+<h3>Registro</h3><div id="log"></div>
+<script>
+(function(){
+  const $=id=>document.getElementById(id), log=t=>{$("log").textContent=new Date().toLocaleTimeString()+"  "+t+"\n"+$("log").textContent;};
+  const d=new Date();d.setFullYear(d.getFullYear()-2);$("s").value=d.toISOString().slice(0,10);
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  let initial=null;
+  $("go").addEventListener("click",async()=>{
+    const key=$("k").value.trim(),start=$("s").value;
+    if(!key||!start){$("st").textContent="Rellena la clave y la fecha.";return;}
+    $("go").disabled=true;
+    while(true){
+      let j;
+      try{const r=await fetch("/.netlify/functions/carga-historico?key="+encodeURIComponent(key)+"&start="+start);j=await r.json();
+        if(!r.ok){log("ERROR: "+(j.error||r.status));break;}}
+      catch(e){log("Error de red, reintento en 30 s");await wait(30000);continue;}
+      if(initial===null)initial=j.remaining+j.done;
+      const pct=initial?Math.round((initial-j.remaining)/initial*100):100;
+      $("bar").firstElementChild.style.width=pct+"%";
+      $("st").textContent=pct+" % · faltan "+j.remaining+" días · guardados "+j.withData+" días con datos";
+      if(j.done)log("Guardados "+j.done+" días (hasta "+j.last+")");
+      if(j.error)log("Aviso: "+j.error);
+      if(j.remaining<=0){log("✅ Histórico completo");$("st").textContent="✅ Terminado: "+j.withData+" días con datos.";break;}
+      if(j.limit){log("Límite de la API alcanzado, espero 70 s…");await wait(70000);}
+      else await wait(12000);
+    }
+    $("go").disabled=false;
+  });
+})();
+</script></body></html>
