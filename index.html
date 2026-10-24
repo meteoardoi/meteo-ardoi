@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meteo Zizur · El tiempo en Ardoi, Zizur Mayor</title>
-<meta name="description" content="Estación meteorológica local en Ardoi, Zizur Mayor (Navarra). Temperatura, humedad, viento, lluvia, presión, previsión y récords.">
+<title>Meteo Ardoi · El tiempo en Zizur Mayor</title>
+<meta name="description" content="Estación meteorológica local en Zizur Mayor (Navarra). Temperatura, humedad, viento, lluvia, presión, previsión y récords.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <!-- GOOGLE ADSENSE: pega aquí el script cuando te aprueben -->
 <style>
@@ -58,25 +58,25 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 </head>
 <body>
 <nav><div class="nav-in">
-  <a class="brand" href="#ahora">METEO <span>ZIZUR</span></a>
+  <a class="brand" href="#ahora">METEO <span>ARDOI</span></a>
   <button id="burger" type="button" aria-label="Menú">☰</button>
   <div class="links" id="links">
     <a href="#ahora">Ahora</a><a href="#temperatura">Histórico</a><a href="#prevision">Previsión</a>
-    <a href="#records">Récords</a><a href="#mes">Este mes</a><a href="#sobre">Sobre Meteo Zizur</a>
+    <a href="#records">Récords</a><a href="#mes">Este mes</a><a href="#sobre">Sobre Meteo Ardoi</a>
   </div>
 </div></nav>
 
 <main>
 <header class="hero">
-  <h1>METEO ZIZUR</h1>
-  <p>El tiempo en Ardoi, Zizur Mayor</p>
+  <h1>METEO ARDOI</h1>
+  <p>El tiempo en Zizur Mayor</p>
   <p class="sub">Datos meteorológicos locales · Actualización automática</p>
   <div class="upd"><span class="dot"></span>Última actualización: <b id="upd">—</b></div>
   <div id="err" role="alert"></div>
 </header>
 
 <section id="ahora">
-  <h2>📍 Ahora en Ardoi</h2>
+  <h2>📍 Ahora en Zizur Mayor</h2>
   <div class="grid">
     <div class="card"><div class="lbl">🌡️ Temperatura</div><div class="big" id="n-temp">—</div><div class="sub">Sensación: <span id="n-feel">—</span></div></div>
     <div class="card"><div class="lbl">💧 Humedad</div><div class="big" id="n-hum">—</div><div class="sub">Punto de rocío: <span id="n-dew">—</span></div></div>
@@ -89,7 +89,7 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 </section>
 
 <section><div class="ad" id="ad1">
-  <strong>Patrocina Meteo Zizur</strong>Tu negocio aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
+  <strong>Patrocina Meteo Ardoi</strong>Tu negocio aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
 </div></section>
 
 <section id="temperatura">
@@ -168,11 +168,11 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 <section id="prevision">
   <h2>📅 Próximos días</h2>
   <div class="fc" id="fc"><div class="sk">Cargando previsión…</div></div>
-  <p class="note">⚠️ <b>Datos actuales → estación Meteo Zizur.</b> &nbsp; <b>Previsión → proveedor meteorológico externo (The Weather Company)</b>, no procede de nuestra estación.</p>
+  <p class="note">⚠️ <b>Datos actuales → estación Meteo Ardoi</b> &nbsp; <b>Previsión → proveedor meteorológico externo (The Weather Company)</b>, no procede de nuestra estación.</p>
 </section>
 
 <section id="resumen">
-  <h2>📝 Hoy en Ardoi</h2>
+  <h2>📝 Hoy en Zizur Mayor</h2>
   <div class="card summary">
     <p id="sum-text" style="margin-top:0">—</p>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
@@ -210,13 +210,13 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 </section>
 
 <section><div class="ad" id="ad2">
-  <strong>Espacio publicitario</strong>¿Tienes un negocio en Zizur? Anúnciate aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
+  <strong>Espacio publicitario</strong>¿Tienes un negocio en Zizur Mayor? Anúnciate aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
 </div></section>
 
 <section id="sobre">
-  <h2>ℹ️ Sobre Meteo Zizur</h2>
+  <h2>ℹ️ Sobre Meteo Ardoi</h2>
   <div class="card">
-    <p style="margin-top:0">Meteo Zizur es una estación meteorológica particular situada en la zona de Ardoi, Zizur Mayor (Navarra).</p>
+    <p style="margin-top:0">Meteo Ardoi es una estación meteorológica particular situada en Zizur Mayor (Navarra).</p>
     <p>La estación proporciona información meteorológica local de temperatura, humedad, viento, precipitación y presión atmosférica, actualizada de forma automática.</p>
     <p style="margin-bottom:0">Los récords y estadísticas se calculan con todo el histórico registrado por la propia estación<span id="since"></span>.</p>
   </div>
@@ -224,11 +224,11 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 </main>
 
 <footer>
-  <b>METEO ZIZUR</b><br>Estación meteorológica local<br>Ardoi · Zizur Mayor · Navarra
-  <div class="fl"><a href="#ahora">Inicio</a><a href="#temperatura">Histórico</a><a href="#sobre">Sobre Meteo Zizur</a>
+  <b>METEO ARDOI</b><br>Estación meteorológica local<br>Ardoi · Zizur Mayor · Navarra
+  <div class="fl"><a href="#ahora">Inicio</a><a href="#temperatura">Histórico</a><a href="#sobre">Sobre Meteo Ardoi</a>
     <a href="privacidad.html">Privacidad</a><a href="cookies.html">Cookies</a><a href="aviso-legal.html">Aviso legal</a></div>
   Los datos proporcionados tienen carácter informativo y no sustituyen información meteorológica oficial (AEMET).<br>
-  © <span id="yr"></span> Meteo Zizur
+  © <span id="yr"></span> Meteo Ardoi
 </footer>
 
 <script>
@@ -335,7 +335,7 @@ function renderDay(obs) {
   const hum = TODAY.havg >= 75 ? " y húmedo" : TODAY.havg <= 40 ? " y seco" : "";
   const wind = TODAY.gust >= 50 ? ", con rachas fuertes de hasta "+f0(TODAY.gust)+" km/h" : TODAY.gust >= 30 ? ", con algo de viento" : "";
   const rtxt = rain >= 0.2 ? " y precipitaciones acumuladas de "+f1(rain)+" mm" : " y sin precipitaciones";
-  set("sum-text", temp+hum+" en Ardoi, con temperaturas entre "+f1(tmin)+" °C y "+f1(tmax)+" °C"+wind+rtxt+".");
+  set("sum-text", temp+hum+" en Zizur Mayor, con temperaturas entre "+f1(tmin)+" °C y "+f1(tmax)+" °C"+wind+rtxt+".");
 }
 
 const histDays = { t: 7, h: 7 };
@@ -389,7 +389,7 @@ function renderRecords() {
 function renderMonth() {
   const now = new Date(), mk = isoLocal(now).slice(0,7);
   const md = allDays().filter(d=>d.date.startsWith(mk));
-  set("mes-title", "📊 Así va "+now.toLocaleDateString("es-ES",{month:"long",year:"numeric"})+" en Ardoi");
+  set("mes-title", "📊 Así va "+now.toLocaleDateString("es-ES",{month:"long",year:"numeric"})+" en Zizur Mayor");
   if (!md.length) return;
   set("m-avg", f1(md.reduce((s,d)=>s+(ok(d.tavg)?d.tavg:(d.tmax+d.tmin)/2),0)/md.length)+" °C");
   set("m-max", f1(maxBy(md,"tmax").tmax)+" °C"); set("m-min", f1(minBy(md,"tmin").tmin)+" °C");
