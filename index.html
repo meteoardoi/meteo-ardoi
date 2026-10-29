@@ -82,6 +82,7 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 .cond-temp{font-size:2.3rem;font-weight:750;line-height:1.05}
 .cond-txt{font-size:1rem;font-weight:600}
 .cond-sub{font-size:.84rem;color:rgba(255,255,255,.88);line-height:1.55}
+.cond-src{font-size:.72rem;color:rgba(255,255,255,.68);margin-top:.35rem}
 .cond.clear{background:linear-gradient(135deg,#1559c7 0%,#3d93f0 65%,#e9b949 150%)}
 .cond.fewclouds{background:linear-gradient(135deg,#2b5f96 0%,#5a8dbf 70%,#c9b46b 160%)}
 .cond.cloudy{background:linear-gradient(135deg,#3b4d61,#6a7f94)}
@@ -164,7 +165,8 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
         <div><div class="cond-temp" id="hc-temp">—</div><div class="cond-txt" id="n-cond">Cargando…</div></div>
       </div>
       <div class="cond-sub" id="hc-sub"></div>
-     </div>
+      <div class="cond-src" id="hc-src"></div>
+    </div>
   </div>
   <div id="err"></div>
 </header>
@@ -185,7 +187,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
 <!-- PUBLICIDAD 1 -->
 <section><div class="ad" id="ad1">
   <!-- AdSense: sustituye este bloque por tu <ins class="adsbygoogle" ...> -->
-  <strong>Patrocina Meteo Ardoi</strong>Anúnciate aquí<a href="mailto:contacto@meteoardoi.es">Contacto</a>
+  <strong>Patrocina Meteo Ardoi</strong>Tu negocio aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
 </div></section>
 
 <!-- TEMPERATURA -->
@@ -200,7 +202,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
       <div class="kv"><span>Media</span><b id="t-avg">—</b></div>
     </div>
     <div class="card">
-      <div class="ch-head"><h3>📈 Temperatura y punto de rocío · hoy</h3><button type="button" class="dl" data-csv="temp" title="Descargar datos de temperatura de hoy">⬇ CSV</button></div>
+      <div class="ch-head"><h3>📈 Temperatura y punto de rocío · últimas 24 h</h3><button type="button" class="dl" data-csv="temp" title="Descargar datos de temperatura de las últimas 24 h">⬇ CSV</button></div>
       <div class="chartbox"><canvas id="ch-t24" role="img" aria-label="Gráfico de temperatura de hoy"></canvas></div>
     </div>
   </div>
@@ -223,7 +225,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
       <div class="kv"><span>Media</span><b id="h-avg">—</b></div>
     </div>
     <div class="card">
-      <div class="ch-head"><h3>📈 Humedad relativa · hoy</h3><button type="button" class="dl" data-csv="hum" title="Descargar datos de humedad de hoy">⬇ CSV</button></div>
+      <div class="ch-head"><h3>📈 Humedad relativa · últimas 24 h</h3><button type="button" class="dl" data-csv="hum" title="Descargar datos de humedad de las últimas 24 h">⬇ CSV</button></div>
       <div class="chartbox"><canvas id="ch-h24" role="img" aria-label="Gráfico de humedad de hoy"></canvas></div>
     </div>
   </div>
@@ -252,14 +254,14 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
       <div class="kv"><span>Velocidad media hoy</span><b id="w-avg">—</b></div>
     </div>
     <div class="card">
-      <div class="ch-head"><h3>📈 Viento medio y rachas · hoy</h3><button type="button" class="dl" data-csv="wind" title="Descargar datos de viento de hoy">⬇ CSV</button></div>
+      <div class="ch-head"><h3>📈 Viento medio y rachas · últimas 24 h</h3><button type="button" class="dl" data-csv="wind" title="Descargar datos de viento de las últimas 24 h">⬇ CSV</button></div>
       <div class="chartbox"><canvas id="ch-w24" role="img" aria-label="Gráfico de viento de hoy"></canvas></div>
     </div>
   </div>
   <div class="duo">
     <div class="card">
-      <div class="lbl">🧭 Rosa de los vientos · hoy</div>
-      <div class="cv rosebox"><canvas id="cRose" tabindex="0" role="img" aria-label="Rosa de los vientos de hoy. Usa las flechas para recorrer las direcciones"></canvas></div>
+      <div class="lbl">🧭 Rosa de los vientos · últimas 24 h</div>
+      <div class="cv rosebox"><canvas id="cRose" tabindex="0" role="img" aria-label="Rosa de los vientos de las últimas 24 horas. Usa las flechas para recorrer las direcciones"></canvas></div>
       <div class="legend" id="roseLeg"></div>
       <div class="rose-info" id="roseTxt" aria-live="polite">—</div>
     </div>
@@ -288,7 +290,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
   </div>
   <div class="duo">
     <div class="card">
-      <div class="ch-head"><h3>💧 Lluvia acumulada · hoy</h3><button type="button" class="dl" data-csv="rain" title="Descargar datos de lluvia de hoy">⬇ CSV</button></div>
+      <div class="ch-head"><h3>💧 Lluvia acumulada · últimas 24 h</h3><button type="button" class="dl" data-csv="rain" title="Descargar datos de lluvia de las últimas 24 h">⬇ CSV</button></div>
       <div class="chartbox"><canvas id="ch-r24" role="img" aria-label="Lluvia acumulada hoy"></canvas></div>
     </div>
     <div class="card">
@@ -320,7 +322,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
   <div class="two">
     <div class="card"><div class="lbl">Actual</div><div class="big" id="p-now">—</div><div class="big" style="font-size:1.3rem" id="p-trend">—</div><div class="sub">Tendencia últimas 3 horas</div></div>
     <div class="card">
-      <div class="ch-head"><h3>📈 Presión · hoy</h3><button type="button" class="dl" data-csv="pres" title="Descargar datos de presión de hoy">⬇ CSV</button></div>
+      <div class="ch-head"><h3>📈 Presión · últimas 24 h</h3><button type="button" class="dl" data-csv="pres" title="Descargar datos de presión de las últimas 24 h">⬇ CSV</button></div>
       <div class="chartbox"><canvas id="ch-p24" role="img" aria-label="Gráfico de presión de hoy"></canvas></div>
     </div>
   </div>
@@ -405,23 +407,23 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
 <!-- PUBLICIDAD 2 -->
 <section><div class="ad" id="ad2">
   <!-- AdSense: segundo bloque responsive -->
-  <strong>Espacio publicitario</strong>¿Tienes un negocio en Zizur? Anúnciate aquí <a href="mailto:contacto@meteoardoi.es">Contacto</a>
+  <strong>Espacio publicitario</strong>¿Tienes un negocio en Zizur? Anúnciate aquí · <a href="mailto:contacto@meteoardoi.es">Contacto</a>
 </div></section>
 
 <!-- SOBRE -->
 <section id="sobre">
   <h2>ℹ️ Sobre Meteo Ardoi</h2>
   <div class="card">
-    <p style="margin-top:0">Meteo Ardoi es una estación meteorológica particular situada en Zizur Mayor (Navarra).</p>
+    <p style="margin-top:0">Meteo Ardoi es una estación meteorológica particular situada Zizur Mayor (Navarra).</p>
     <p>La estación proporciona información meteorológica local de temperatura, humedad, viento, precipitación y presión atmosférica, actualizada de forma automática.</p>
-    <p style="margin-bottom:0">Los récords y estadísticas se calculan a partir de los datos registrados por la propia estación desde abril de 2025.</p>
+    <p style="margin-bottom:0">Los récords y estadísticas se calculan a partir de los datos registrados por la propia estación.</p>
   </div>
 </section>
 </main>
 
 <footer>
   <b>METEO ARDOI</b><br>Estación meteorológica local<br>Zizur Mayor · Navarra
-  <div class="fl"><a href="#ahora">Inicio</a><a href="#sobre">Sobre Meteo Ardoi</a></p>
+  <div class="fl"><a href="#ahora">Inicio</a><a href="#temperatura">Histórico</a><a href="#sobre">Sobre Meteo Ardoi</a>
     <a href="privacidad.html">Privacidad</a><a href="cookies.html">Cookies</a><a href="aviso-legal.html">Aviso legal</a></div>
   Los datos proporcionados tienen carácter informativo y no sustituyen información meteorológica oficial (AEMET).<br>
   © <span id="yr"></span> Meteo Ardoi
@@ -586,7 +588,7 @@ async function api(type, extra = {}) {
   } else {
     const D = CONFIG.DIRECT, P = {
       current:"v2/pws/observations/current", day:"v2/pws/observations/all/1day",
-      daily7:"v2/pws/dailysummary/7day", history:"v2/pws/history/daily", forecast:"v3/wx/forecast/daily/5day"}[type];
+      daily7:"v2/pws/dailysummary/7day", history:"v2/pws/history/daily", dayall:"v2/pws/history/all", forecast:"v3/wx/forecast/daily/5day"}[type];
     const p = new URLSearchParams({format:"json",units:"m",apiKey:D.apiKey});
     if (type==="forecast"){p.set("geocode",D.geocode);p.set("language","es-ES");}
     else {p.set("stationId",D.stationId);p.set("numericPrecision","decimal");}
@@ -791,13 +793,13 @@ function downloadCSV(name, head, rows) {
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
 }
 const num = v => isNum(v) ? +v : null;
-const TL = () => (TODAY && TODAY.list) || [];
+const TL = () => L24;
 const CSV = {
-  temp:  () => ["temperatura_hoy", ["Hora","Temp. media (°C)","Temp. máx (°C)","Temp. mín (°C)","Punto de rocío (°C)"], TL().map(r => [r.local, num(r.tAvg), num(r.tHi), num(r.tLo), num(r.dAvg)])],
-  hum:   () => ["humedad_hoy", ["Hora","Humedad media (%)","Humedad máx (%)","Humedad mín (%)"], TL().map(r => [r.local, num(r.hAvg), num(r.hHi), num(r.hLo)])],
-  wind:  () => ["viento_hoy", ["Hora","Viento medio (km/h)","Viento máx (km/h)","Racha (km/h)","Dirección (°)","Dirección"], TL().map(r => [r.local, num(r.wAvg), num(r.wHi), num(r.gHi), num(r.wDir), isNum(r.wDir) ? dirTxt(r.wDir) : ""])],
-  rain:  () => ["lluvia_hoy", ["Hora","Lluvia acumulada (mm)","Intensidad (mm/h)"], TL().map(r => [r.local, num(r.rain), num(r.rRate)])],
-  pres:  () => ["presion_hoy", ["Hora","Presión media (hPa)","Presión máx (hPa)","Presión mín (hPa)"], TL().map(r => [r.local, num(r.pMid), num(r.pMax), num(r.pMin)])],
+  temp:  () => ["temperatura_24h", ["Hora","Temp. media (°C)","Temp. máx (°C)","Temp. mín (°C)","Punto de rocío (°C)"], TL().map(r => [r.local, num(r.tAvg), num(r.tHi), num(r.tLo), num(r.dAvg)])],
+  hum:   () => ["humedad_24h", ["Hora","Humedad media (%)","Humedad máx (%)","Humedad mín (%)"], TL().map(r => [r.local, num(r.hAvg), num(r.hHi), num(r.hLo)])],
+  wind:  () => ["viento_24h", ["Hora","Viento medio (km/h)","Viento máx (km/h)","Racha (km/h)","Dirección (°)","Dirección"], TL().map(r => [r.local, num(r.wAvg), num(r.wHi), num(r.gHi), num(r.wDir), isNum(r.wDir) ? dirTxt(r.wDir) : ""])],
+  rain:  () => ["lluvia_24h", ["Hora","Lluvia acumulada 24 h (mm)","Intensidad (mm/h)"], TL().map(r => [r.local, num(r.rain24), num(r.rRate)])],
+  pres:  () => ["presion_24h", ["Hora","Presión media (hPa)","Presión máx (hPa)","Presión mín (hPa)"], TL().map(r => [r.local, num(r.pMid), num(r.pMax), num(r.pMin)])],
   thist: () => [`temperatura_${HD.t || "todo"}${HD.t ? "dias" : ""}`, ["Fecha","Máxima (°C)","Mínima (°C)","Media (°C)"], histSlice(HD.t).map(d => [d.date, num(d.tmax), num(d.tmin), num(d.tavg)])],
   hhist: () => [`humedad_${HD.h || "todo"}${HD.h ? "dias" : ""}`, ["Fecha","Máxima (%)","Mínima (%)","Media (%)"], histSlice(HD.h).map(d => [d.date, num(d.hmax), num(d.hmin), num(d.havg)])],
   r30:   () => ["lluvia_30dias", ["Fecha","Precipitación (mm)"], LAST30.map(d => [d.date, num(d.rain)])],
@@ -990,8 +992,10 @@ function renderCond() {
   $("cond").className = "cond " + sk.c;
   if (FC_COND && !sk.rain) {
     set("n-cond-ico", FC_COND.ico); set("n-cond", FC_COND.txt);
+    set("hc-src", "Estado del cielo: The Weather Company · Medidas: estación Meteo Ardoi");
   } else {
     set("n-cond-ico", sk.i); set("n-cond", sk.t);
+    set("hc-src", "Estado estimado con los datos de la estación Meteo Ardoi");
   }
   set("hc-temp", f1(m.temp)+" °C");
   let l2 = `${cap(DIAS_L[now.getDay()])}, ${now.getDate()} de ${MESES_L[now.getMonth()]} · ${cap(season(now))}`;
@@ -1075,12 +1079,12 @@ function roseInfo() {
   const el = $("roseTxt"); if (!el) return;
   if (!ROSE || !ROSE.tot) { el.innerHTML = "—"; return; }
   const { cnt, tot, calm, best, bestP } = ROSE, p = v => Math.round(v/tot*100);
-  if (ROSE_HL === 16) el.innerHTML = `<b>Calma</b> (&lt; 1 km/h): ${p(calm)} % del día`;
+  if (ROSE_HL === 16) el.innerHTML = `<b>Calma</b> (&lt; 1 km/h): ${p(calm)} % del periodo`;
   else if (ROSE_HL >= 0) {
     const c = cnt[ROSE_HL], s = c.reduce((a,b) => a+b, 0);
-    el.innerHTML = `Viento del <b>${DIRS[ROSE_HL]}</b>: ${p(s)} % del día` +
+    el.innerHTML = `Viento del <b>${DIRS[ROSE_HL]}</b>: ${p(s)} % del periodo` +
       (s ? "<br>" + ROSE_BINS.map((b,j) => c[j] ? `${b[3]} km/h: ${p(c[j])} %` : "").filter(Boolean).join(" · ") : "");
-  } else el.innerHTML = `Predomina el viento del <b>${DIRS[best]}</b> (${Math.round(bestP)} % del día) · calma ${p(calm)} %<br><span class="sub">Pasa el ratón o toca un sector para ver el detalle</span>`;
+  } else el.innerHTML = `Predomina el viento del <b>${DIRS[best]}</b> (${Math.round(bestP)} % del periodo) · calma ${p(calm)} %<br><span class="sub">Pasa el ratón o toca un sector para ver el detalle</span>`;
 }
 (function bindRose() {
   const c = $("cRose");
@@ -1182,7 +1186,38 @@ function renderNow(c) {
   renderCond();
 }
 
-function renderDay(obs) {
+/* ---- Ventana móvil de 24 h: observaciones de ayer (se piden 1 vez al día) + hoy ---- */
+let L24 = [], YDAY = { key: null, list: [] };
+async function loadYesterday() {
+  const k = ymd(addDays(today0(), -1));
+  if (YDAY.key === k) return YDAY.list;
+  try {
+    const j = await api("dayall", { date: k });
+    const list = (j.observations || []).map(norm5).filter(r => isNum(r.epoch));
+    if (list.length) YDAY = { key: k, list };   // si viene vacío se reintenta en el próximo refresco
+    return list;
+  } catch (e) { console.warn("Sin datos de ayer: los gráficos muestran solo hoy", e); return []; }
+}
+function build24(today, yday) {
+  const lim = Date.now()/1000 - 24*3600, seen = new Set(), out = [];
+  [...yday, ...today].forEach(r => { if (r.epoch >= lim && !seen.has(r.epoch)) { seen.add(r.epoch); out.push(Object.assign({}, r)); } });
+  out.sort((a,b) => a.epoch - b.epoch);
+  // Lluvia: WU reinicia el acumulado a medianoche → se convierte en acumulado continuo de 24 h
+  let acc = 0, prev = null, prevDay = null;
+  out.forEach(r => {
+    const v = isNum(r.rain) ? +r.rain : null;
+    if (v !== null) {
+      if (prev === null) prev = v;                       // punto de partida de la ventana
+      else if (r.day !== prevDay || v < prev) { acc += v; prev = v; }   // nuevo día: el acumulado empieza de 0
+      else { acc += v - prev; prev = v; }
+      prevDay = r.day;
+    }
+    r.rain24 = Math.max(0, acc);
+  });
+  return out;
+}
+
+function renderDay(obs, yday = []) {
   const L = obs.map(norm5).filter(r => isNum(r.epoch));
   if (!L.length) return;
   const avg = k => { const v = L.map(r => r[k]).filter(isNum); return v.length ? v.reduce((s,x) => s + +x, 0)/v.length : null; };
@@ -1210,7 +1245,8 @@ function renderDay(obs) {
   const rtxt = rain >= 0.2 ? ` y precipitaciones acumuladas de ${f1(rain)} mm` : " y sin precipitaciones";
   set("sum-text", `${temp}${hum} en Ardoi, con temperaturas entre ${f1(tmin)} °C y ${f1(tmax)} °C${wind}${rtxt}.`);
 
-  const xs = L.map(r => r.epoch), col = k => L.map(r => r[k]);
+  L24 = build24(L, yday);
+  const xs = L24.map(r => r.epoch), col = k => L24.map(r => r[k]);
   drawChart("ch-t24", xs, [
     { name:"Temperatura", data:col("tAvg"), color:"#f97316", unit:"°C", stroke:valGrad(PAL_T,1), fill:valGrad(PAL_T,.22), width:2.4 },
     { name:"Rocío", data:col("dAvg"), color:"#60a5fa", unit:"°C", width:1.5 }], { minSpan:4 });
@@ -1219,10 +1255,10 @@ function renderDay(obs) {
   drawChart("ch-w24", xs, [
     { name:"Racha", data:col("gHi"), color:"#f43f5e", unit:"km/h", width:1.2 },
     { name:"Medio", data:col("wAvg"), color:"#34d399", fill:"rgba(52,211,153,.18)", unit:"km/h" }], { zero:true, minSpan:10 });
-  drawChart("ch-r24", xs, [{ name:"Acumulada", data:col("rain"), color:"#38bdf8", unit:"mm", stroke:valGrad(PAL_R,1), fill:valGrad(PAL_R,.35) }],
+  drawChart("ch-r24", xs, [{ name:"Acumulada", data:col("rain24"), color:"#38bdf8", unit:"mm", stroke:valGrad(PAL_R,1), fill:valGrad(PAL_R,.35) }],
     { zero:true, dec:1, minSpan:2 });
   drawChart("ch-p24", xs, [{ name:"Presión", data:col("pMid"), color:"#a78bfa", unit:"hPa" }], { minSpan:4 });
-  drawRose(L);
+  drawRose(L24);
   renderET();
 }
 
@@ -1338,10 +1374,10 @@ if (mq && mq.addEventListener) mq.addEventListener("change", redrawAll);
 /* ================= CICLO PRINCIPAL ================= */
 async function refreshLive() {
   try {
-    const [c, d] = await Promise.all([api("current"), api("day")]);
+    const [c, d, y] = await Promise.all([api("current"), api("day"), loadYesterday()]);
     if (!c.observations || !c.observations.length) throw new Error("la estación no ha enviado datos");
     renderNow(c.observations[0]);
-    renderDay(d.observations || []);
+    renderDay(d.observations || [], y);
     renderRain(); renderCompare(); renderRecords(); renderMonth();
     $("err").style.display = "none";
   } catch(e) {
