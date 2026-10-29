@@ -82,7 +82,6 @@ footer .fl{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:.8
 .cond-temp{font-size:2.3rem;font-weight:750;line-height:1.05}
 .cond-txt{font-size:1rem;font-weight:600}
 .cond-sub{font-size:.84rem;color:rgba(255,255,255,.88);line-height:1.55}
-.cond-src{font-size:.72rem;color:rgba(255,255,255,.68);margin-top:.35rem}
 .cond.clear{background:linear-gradient(135deg,#1559c7 0%,#3d93f0 65%,#e9b949 150%)}
 .cond.fewclouds{background:linear-gradient(135deg,#2b5f96 0%,#5a8dbf 70%,#c9b46b 160%)}
 .cond.cloudy{background:linear-gradient(135deg,#3b4d61,#6a7f94)}
@@ -165,8 +164,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
         <div><div class="cond-temp" id="hc-temp">—</div><div class="cond-txt" id="n-cond">Cargando…</div></div>
       </div>
       <div class="cond-sub" id="hc-sub"></div>
-      <div class="cond-src" id="hc-src"></div>
-    </div>
+     </div>
   </div>
   <div id="err"></div>
 </header>
@@ -992,10 +990,8 @@ function renderCond() {
   $("cond").className = "cond " + sk.c;
   if (FC_COND && !sk.rain) {
     set("n-cond-ico", FC_COND.ico); set("n-cond", FC_COND.txt);
-    set("hc-src", "Estado del cielo: The Weather Company · Medidas: estación Meteo Ardoi");
   } else {
     set("n-cond-ico", sk.i); set("n-cond", sk.t);
-    set("hc-src", "Estado estimado con los datos de la estación Meteo Ardoi");
   }
   set("hc-temp", f1(m.temp)+" °C");
   let l2 = `${cap(DIAS_L[now.getDay()])}, ${now.getDate()} de ${MESES_L[now.getMonth()]} · ${cap(season(now))}`;
