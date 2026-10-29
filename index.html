@@ -992,10 +992,8 @@ function renderCond() {
   $("cond").className = "cond " + sk.c;
   if (FC_COND && !sk.rain) {
     set("n-cond-ico", FC_COND.ico); set("n-cond", FC_COND.txt);
-    set("hc-src", "Estado del cielo: The Weather Company · Medidas: estación Meteo Ardoi");
   } else {
     set("n-cond-ico", sk.i); set("n-cond", sk.t);
-    set("hc-src", "Estado estimado con los datos de la estación Meteo Ardoi");
   }
   set("hc-temp", f1(m.temp)+" °C");
   let l2 = `${cap(DIAS_L[now.getDay()])}, ${now.getDate()} de ${MESES_L[now.getMonth()]} · ${cap(season(now))}`;
