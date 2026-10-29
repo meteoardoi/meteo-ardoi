@@ -208,7 +208,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
   </div>
   <div class="card" style="margin-top:1rem">
     <div class="ch-head"><h3>📅 Histórico de temperatura</h3><button type="button" class="dl" data-csv="thist" title="Descargar histórico de temperatura">⬇ CSV</button></div>
-    <div class="tabs" data-for="t"><button type="button" data-d="7" class="on">7 días</button><button type="button" data-d="14">14 días</button><button type="button" data-d="30">30 días</button></div>
+    <div class="tabs" data-for="t"><button type="button" data-d="7" class="on">7 días</button><button type="button" data-d="30">30 días</button><button type="button" data-d="90">3 meses</button><button type="button" data-d="365">1 año</button><button type="button" data-d="0">Todo</button></div>
     <div class="chartbox"><canvas id="ch-thist" role="img" aria-label="Histórico de temperaturas máximas y mínimas"></canvas></div>
   </div>
 </section>
@@ -231,7 +231,7 @@ table.t th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:up
   </div>
   <div class="card" style="margin-top:1rem">
     <div class="ch-head"><h3>📅 Histórico de humedad</h3><button type="button" class="dl" data-csv="hhist" title="Descargar histórico de humedad">⬇ CSV</button></div>
-    <div class="tabs" data-for="h"><button type="button" data-d="7" class="on">7 días</button><button type="button" data-d="14">14 días</button><button type="button" data-d="30">30 días</button></div>
+    <div class="tabs" data-for="h"><button type="button" data-d="7" class="on">7 días</button><button type="button" data-d="30">30 días</button><button type="button" data-d="90">3 meses</button><button type="button" data-d="365">1 año</button><button type="button" data-d="0">Todo</button></div>
     <div class="chartbox"><canvas id="ch-hhist" role="img" aria-label="Histórico de humedad"></canvas></div>
   </div>
 </section>
@@ -620,8 +620,21 @@ function norm5(o) {
   return r;
 }
 
-/* Histórico diario con caché en localStorage (los días pasados no cambian) */
+/* Histórico diario: primero el ARCHIVO guardado en Netlify (todos los días, incluido 2025);
+   si no está disponible, últimos días pidiéndolos a la API con caché local */
+async function loadArchive() {
+  try {
+    const r = await fetch("/.netlify/functions/archivo", { cache: "no-store" });
+    if (!r.ok) throw new Error("archivo: HTTP " + r.status);
+    const j = await r.json();
+    if (!Array.isArray(j)) throw new Error("archivo: formato inesperado");
+    const hoy = isoD(today0());
+    return j.filter(d => d && d.date && d.date < hoy && !d.empty).sort((a,b) => a.date < b.date ? -1 : 1);
+  } catch (e) { console.warn("Sin archivo de Netlify, uso la API", e); return null; }
+}
 async function loadHistory(days) {
+  const arc = await loadArchive();
+  if (arc && arc.length) return arc;
   const cache = JSON.parse(localStorage.getItem("mz_hist") || "{}");
   const out = [], today = new Date();
   for (let i = days; i >= 1; i--) {
@@ -631,20 +644,13 @@ async function loadHistory(days) {
       try {
         const j = await api("history", {date:k});
         cache[k] = normDay(j.observations && j.observations[0]) || {date:`${k.slice(0,4)}-${k.slice(4,6)}-${k.slice(6)}`, empty:true};
-        await sleep(250); // respeta el límite de llamadas de la API
+        await sleep(250);
       } catch(e) { console.warn(e); continue; }
     }
     if (!cache[k].empty) out.push(cache[k]);
   }
   localStorage.setItem("mz_hist", JSON.stringify(cache));
-  updateArchive(Object.values(cache).filter(x=>!x.empty));
   return out;
-}
-/* Archivo de récords anuales / históricos (se va construyendo con el tiempo) */
-function updateArchive(days) {
-  const arc = JSON.parse(localStorage.getItem("mz_arch") || "{}");
-  days.forEach(d => arc[d.date] = d);
-  localStorage.setItem("mz_arch", JSON.stringify(arc));
 }
 
 /* =====================================================================
@@ -794,8 +800,8 @@ const CSV = {
   wind:  () => ["viento_hoy", ["Hora","Viento medio (km/h)","Viento máx (km/h)","Racha (km/h)","Dirección (°)","Dirección"], TL().map(r => [r.local, num(r.wAvg), num(r.wHi), num(r.gHi), num(r.wDir), isNum(r.wDir) ? dirTxt(r.wDir) : ""])],
   rain:  () => ["lluvia_hoy", ["Hora","Lluvia acumulada (mm)","Intensidad (mm/h)"], TL().map(r => [r.local, num(r.rain), num(r.rRate)])],
   pres:  () => ["presion_hoy", ["Hora","Presión media (hPa)","Presión máx (hPa)","Presión mín (hPa)"], TL().map(r => [r.local, num(r.pMid), num(r.pMax), num(r.pMin)])],
-  thist: () => [`temperatura_${HD.t}dias`, ["Fecha","Máxima (°C)","Mínima (°C)","Media (°C)"], HIST.slice(-HD.t).map(d => [d.date, num(d.tmax), num(d.tmin), num(d.tavg)])],
-  hhist: () => [`humedad_${HD.h}dias`, ["Fecha","Máxima (%)","Mínima (%)","Media (%)"], HIST.slice(-HD.h).map(d => [d.date, num(d.hmax), num(d.hmin), num(d.havg)])],
+  thist: () => [`temperatura_${HD.t || "todo"}${HD.t ? "dias" : ""}`, ["Fecha","Máxima (°C)","Mínima (°C)","Media (°C)"], histSlice(HD.t).map(d => [d.date, num(d.tmax), num(d.tmin), num(d.tavg)])],
+  hhist: () => [`humedad_${HD.h || "todo"}${HD.h ? "dias" : ""}`, ["Fecha","Máxima (%)","Mínima (%)","Media (%)"], histSlice(HD.h).map(d => [d.date, num(d.hmax), num(d.hmin), num(d.havg)])],
   r30:   () => ["lluvia_30dias", ["Fecha","Precipitación (mm)"], LAST30.map(d => [d.date, num(d.rain)])],
   et:    () => ["evapotranspiracion", ["Día","ET0 (mm)","Lluvia (mm)","Balance (mm)"], ET_ROWS.map(r => [isoD(pKey(r.day)), r.et, r.rain, r.bal])]
 };
@@ -1224,16 +1230,18 @@ function renderDay(obs) {
   renderET();
 }
 
+const histSlice = n => n > 0 ? HIST.slice(-n) : HIST.slice();
+const hLabel = (iso, n) => (n === 0 || n > 90) ? pDate(iso).toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"2-digit"}) : dLabel(pDate(iso));
 function renderHistCharts(which) {
   const empty = HIST_READY ? "Sin datos" : "Cargando histórico…";
   if (!which || which === "t") {
-    const sl = HIST.slice(-HD.t), xs = sl.map((_,i) => i), lb = sl.map(d => dLabel(pDate(d.date)));
+    const sl = histSlice(HD.t), xs = sl.map((_,i) => i), lb = sl.map(d => hLabel(d.date, HD.t));
     drawChart("ch-thist", xs, [
       { name:"Máxima", data:sl.map(d => d.tmax), color:"#f97316", unit:"°C", dots:true },
       { name:"Mínima", data:sl.map(d => d.tmin), color:"#60a5fa", unit:"°C", dots:true }], { xLabels:lb, minSpan:6, emptyText:empty });
   }
   if (!which || which === "h") {
-    const sl = HIST.slice(-HD.h), xs = sl.map((_,i) => i), lb = sl.map(d => dLabel(pDate(d.date)));
+    const sl = histSlice(HD.h), xs = sl.map((_,i) => i), lb = sl.map(d => hLabel(d.date, HD.h));
     drawChart("ch-hhist", xs, [
       { name:"Máxima", data:sl.map(d => d.hmax), color:"#38bdf8", unit:"%", dec:0, dots:true },
       { name:"Mínima", data:sl.map(d => d.hmin), color:"#94a3b8", unit:"%", dec:0, dots:true }], { xLabels:lb, minSpan:10, yMin:0, yMax:100, emptyText:empty });
@@ -1246,7 +1254,7 @@ function renderRain() {
   const sum = a => a.reduce((s,d) => s + (+d.rain || 0), 0);
   set("r-7d", f1(sum(all.slice(-7)))+" mm");
   set("r-month", f1(sum(all.filter(d => d.date.startsWith(mk))))+" mm");
-  const arc = Object.values(JSON.parse(localStorage.getItem("mz_arch") || "{}")).filter(d => d.date.startsWith(yk) && (!TODAY || d.date !== TODAY.date));
+  const arc = HIST.filter(d => d.date.startsWith(yk) && (!TODAY || d.date !== TODAY.date));
   set("r-year", f1(sum(arc) + (TODAY ? TODAY.rain : 0))+" mm"); set("r-year-n", `*con ${arc.length+1} días registrados`);
   LAST30 = all.slice(-30);
   drawChart("ch-r30", LAST30.map((_,i) => i), [{ name:"Lluvia", data:LAST30.map(d => d.rain), color:"#38bdf8", bars:true, unit:"mm" }],
@@ -1265,7 +1273,7 @@ function renderCompare() {
 
 function renderRecords() {
   const now = new Date(), mk = mKey(now), yk = String(now.getFullYear());
-  const arc = Object.values(JSON.parse(localStorage.getItem("mz_arch")||"{}"));
+  const arc = HIST;
   let pool = recMode==="mes" ? arc.filter(d=>d.date.startsWith(mk)) : recMode==="anio" ? arc.filter(d=>d.date.startsWith(yk)) : arc;
   if (TODAY) pool = [...pool.filter(d=>d.date!==TODAY.date), TODAY];
   const dd = d => d ? pDate(d.date).toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"}) : "";
@@ -1275,7 +1283,7 @@ function renderRecords() {
   set("rc-gust", c?f0(c.gust)+" km/h":"—"); set("rc-gust-d", dd(c));
   set("rc-rain", r?f1(r.rain)+" mm":"—"); set("rc-rain-d", dd(r));
   const first = pool.map(d=>d.date).sort()[0];
-  set("rec-note", first ? `Calculado con ${pool.length} días de datos (desde ${dd({date:first})}). Los récords anuales e históricos crecen a medida que la estación acumula datos.` : "");
+  set("rec-note", first ? `Calculado con ${pool.length} días de datos (desde ${dd({date:first})}). ` : "");
 }
 
 function renderMonth() {
